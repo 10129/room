@@ -1,0 +1,342 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <!--继承父级pom,以及父级相关依赖-->
+  <parent>
+    <artifactId>xy99520</artifactId>
+    <groupId>com.hand</groupId>
+    <version>${project.build.version}</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>core</artifactId>
+  <packaging>war</packaging>
+  <version>${project.build.version}</version>
+  <name>core</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <skipLiquibaseRun>true</skipLiquibaseRun>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!--微信API-->
+    <!-- com.google.code.gson/gson -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.2</version>
+    </dependency>
+    <!-- mybatis核心包 -->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>${mybatis.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>${mybatis.spring.version}</version>
+    </dependency>
+    <!-- springframe start -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-oxm</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <!-- springframe end -->
+    <!--mysql数据库驱动 -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.34</version>
+    </dependency>
+    <!-- aspectJ AOP 织入器 -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.8.9</version>
+    </dependency>
+
+    <!-- alibaba-->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.44</version>
+    </dependency>
+    <!--taglibs-->
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    <!-- commons-httpclient -->
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.1</version>
+    </dependency>
+    <!--dom4j -->
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream -->
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib -->
+    <!--json-lib-->
+    <dependency>
+      <groupId>net.sf.json-lib</groupId>
+      <artifactId>json-lib</artifactId>
+      <version>2.4</version>
+      <classifier>jdk15</classifier>
+    </dependency>
+    <!-- servlet-api -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>javax.servlet.jsp-api</artifactId>
+      <version>2.3.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId> org.aspectj</groupId >
+      <artifactId> aspectjweaver</artifactId >
+      <version> 1.6.11</version >
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/jstl/jstl -->
+    <dependency>
+      <groupId>jstl</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+
+  </dependencies>
+  <!-- 如果不添加此节点mybatis的mapper.xml文件都会被漏掉。 -->
+  <build>
+    <finalName>core</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>src/main/java</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.groovy</include>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources/profiles/${profile.env}</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
+    <plugins>
+    <!-- 配置mvn install -P  profile所需插件 -->
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-war-plugin</artifactId>
+      <configuration>
+        <!--<warName>${profile.env}</warName>-->
+        <!-- 激活spring profile -->
+        <webResources>
+          <resource>
+            <filtering>true</filtering>
+            <directory>src/main/webapp</directory>
+            <includes>
+              <include>**/web.xml</include>
+            </includes>
+          </resource>
+        </webResources>
+        <warSourceDirectory>src/main/webapp</warSourceDirectory>
+        <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+      </configuration>
+    </plugin>
+      <plugin>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>3.4.2</version>
+        <configuration>
+          <skip>${skipLiquibaseRun}</skip>
+        </configuration>
+        <dependencies>
+          <!-- http://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
+          <!-- Oracle JDBC 驱动 -->
+          <!--<dependency>-->
+            <!--<groupId>com.oracle</groupId>-->
+            <!--<artifactId>ojdbc7</artifactId>-->
+            <!--<version>12.1.0.1.0</version>-->
+          <!--</dependency>-->
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.34</version>
+          </dependency>
+          <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-groovy-dsl</artifactId>
+            <version>1.2.1</version>
+          </dependency>
+          <dependency>
+            <groupId>com.hand</groupId>
+            <artifactId>core-db</artifactId>
+            <type>jar</type>
+            <version>${project.build.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-xml</artifactId>
+            <version>2.4.6</version>
+          </dependency>
+
+
+        </dependencies>
+        <executions>
+          <execution>
+            <id>clearCheckSums</id>
+            <phase>process-resources</phase>
+            <configuration>
+              <driver>${db.driver}</driver>
+              <url>${db.url}</url>
+              <username>${db.user}</username>
+              <password>${db.password}</password>
+              <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+            </configuration>
+            <goals>
+              <goal>clearCheckSums</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>update</id>
+            <phase>process-resources</phase>
+            <configuration>
+              <changeLogFile>com/hand/xy99/db/liquibase.groovy</changeLogFile>
+              <driver>${db.driver}</driver>
+              <url>${db.url}</url>
+              <username>${db.user}</username>
+              <password>${db.password}</password>
+              <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+            </configuration>
+            <goals>
+              <goal>update</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <!-- if including source jars, use the no-fork goals
+             otherwise both the Groovy sources and Java stub sources
+             will get included in your jar -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <!-- source plugin \> = 2.1 is required to use the no-fork goals -->
+        <version>2.4</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+              <goal>test-jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <!--配置文件引入 profile.env-->
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <profile.env>dev</profile.env>
+      </properties>
+    </profile>
+    <profile>
+      <id>sit</id>
+      <activation />
+      <properties>
+        <profile.env>sit</profile.env>
+      </properties>
+    </profile>
+    <profile>
+      <id>uat</id>
+      <activation />
+      <properties>
+        <profile.env>uat</profile.env>
+      </properties>
+    </profile>
+    <profile>
+      <id>pro</id>
+      <activation />
+      <properties>
+        <profile.env>pro</profile.env>
+      </properties>
+    </profile>
+  </profiles>
+</project>
