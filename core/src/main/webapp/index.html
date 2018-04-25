@@ -80,7 +80,7 @@
 						<div class="main_input_box">
 							<span class="add-on bg_lg">
 							<i><img height="37" src="static/login/user.png" /></i>
-							</span><input type="text" name="loginname" id="loginname" value="" placeholder="请输入用户名" />
+							</span><input type="text"  id="loginname" value="" placeholder="请输入用户名" />
 						</div>
 					</div>
 				</div>
@@ -89,7 +89,7 @@
 						<div class="main_input_box">
 							<span class="add-on bg_ly">
 							<i><img height="37" src="static/login/suo.png" /></i>
-							</span><input type="password"  id="password1" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
+							</span><input type="password"  id="password" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
 						</div>
 					</div>
 				</div>
@@ -152,7 +152,7 @@
 						<div class="main_input_box">
 							<span class="add-on bg_ly">
 							<i>密码</i>
-							</span><input type="password"  id="password2" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
+							</span><input type="password"  id="passwordzc" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
 						</div>
 					</div>
 				</div>
@@ -226,60 +226,56 @@
     //服务器校验
     function severCheck(){
         var domain = "http://localhost:8080";
-        $.ajax({
-            type: 'GET',
-            url: domain+'/cux/gxp/role/status',
-            dataType: "json",
-            async: false,
-            success: function (data) {
-                roleFlag = data;
-            }
-        });
-//        if(check()){
-//            var loginname = $("#loginname").val();
-//            var password = $("#password1").val();
-//            var code = loginname+","+password+","+$("#code").val();
-//            $.ajax({
-//                type: "POST",
-//                url: 'login',
-//                data: {code:code,time:new Date().getTime()},
-//                dataType:'json',
-//                cache: false,
-//                success: function(data){
-//                    if("success" == data.result){
-//                        saveCookie();
+        if(check()){
+            var loginname = $("#loginname").val();
+            var password = $("#password").val();
+            var code = loginname+","+password+","+$("#code").val();
+            $.ajax({
+                type: "POST",
+                url: domain+'/login',
+                data: {dtocode:code,time:new Date().getTime()},
+                dataType:'json',
+                cache: false,
+                success: function(data){
+                    console.log(data);
+                    if('S' == data.code){
+                        saveCookie();
+                        console.log("1");
 //                        window.location.href="<%=basePath%>main/index";
-//                    }else if("usererror" == data.result){
-//                        $("#loginname").tips({
-//                            side : 1,
-//                            msg : "用户名或密码有误",
-//                            bg : '#FF5080',
-//                            time : 15
-//                        });
-//                        showfh();
-//                        $("#loginname").focus();
-//                    }else if("codeerror" == data.result){
-//                        $("#code").tips({
-//                            side : 1,
-//                            msg : "验证码输入有误",
-//                            bg : '#FF5080',
-//                            time : 15
-//                        });
-//                        showfh();
-//                        $("#code").focus();
-//                    }else{
-//                        $("#loginname").tips({
-//                            side : 1,
-//                            msg : "缺少参数",
-//                            bg : '#FF5080',
-//                            time : 15
-//                        });
-//                        showfh();
-//                        $("#loginname").focus();
-//                    }
-//                }
-//            });
-//        }
+                    }else if("E" == data.code){
+                        $("#loginname").tips({
+                            side : 1,
+                            msg : "用户名或密码有误",
+                            bg : '#FF5080',
+                            time : 15
+                        });
+                        _change(2)
+                        showfh();
+                        $("#loginname").focus();
+                    }else if("codeerror" == data.code){
+                        $("#code").tips({
+                            side : 1,
+                            msg : "验证码输入有误",
+                            bg : '#FF5080',
+                            time : 15
+                        });
+                        _change(2)
+                        showfh();
+                        $("#code").focus();
+                    }else{
+                        $("#loginname").tips({
+                            side : 1,
+                            msg : "缺少参数",
+                            bg : '#FF5080',
+                            time : 15
+                        });
+                        _change(2)
+                        showfh();
+                        $("#loginname").focus();
+                    }
+                }
+            });
+        }
     }
 
 
@@ -304,15 +300,15 @@
 			} else {
 				$("#loginname").val(jQuery.trim($('#loginname').val()));
 			}
-			if ($("#password1").val() == "") {
-				$("#password1").tips({
+			if ($("#password").val() == "") {
+				$("#password").tips({
 					side : 2,
 					msg : '密码不得为空',
 					bg : '#AE81FF',
 					time : 3
 				});
 				showfh();
-				$("#password1").focus();
+				$("#password").focus();
 				return false;
 			}
 			if ($("#code").val() == "") {
@@ -341,11 +337,11 @@
 				$.cookie('loginname', '', {
 					expires : -1
 				});
-				$.cookie('password1', '', {
+				$.cookie('password', '', {
 					expires : -1
 				});
 				$("#loginname").val('');
-				$("#password1").val('');
+				$("#password").val('');
 			}
 		}
 
@@ -354,7 +350,7 @@
 				$.cookie('loginname', $("#loginname").val(), {
 					expires : 7
 				});
-				$.cookie('password1', $("#password1").val(), {
+				$.cookie('password', $("#password").val(), {
 					expires : 7
 				});
 			}
@@ -366,7 +362,7 @@
 			if (typeof(loginname) != "undefined"
 					&& typeof(password) != "undefined") {
 				$("#loginname").val(loginname);
-				$("#password1").val(password);
+				$("#password").val(password);
 				$("#saveid").attr("checked", true);
 				$("#code").focus();
 			}
@@ -398,17 +394,17 @@
 		}else{
 			$("#USERNAME").val(jQuery.trim($('#USERNAME').val()));
 		}
-		if($("#PASSWORD").val()==""){
-			$("#PASSWORD").tips({
+		if($("#passwordzc").val()==""){
+			$("#passwordzc").tips({
 				side:3,
 	            msg:'输入密码',
 	            bg:'#AE81FF',
 	            time:2
 	        });
-			$("#PASSWORD").focus();
+			$("#passwordzc").focus();
 			return false;
 		}
-		if($("#PASSWORD").val()!=$("#chkpwd").val()){
+		if($("#passwordzc").val()!=$("#chkpwd").val()){
 			$("#chkpwd").tips({
 				side:3,
 	            msg:'两次密码不相同',
@@ -463,15 +459,15 @@
 	//提交注册
 	function register(){
 		if(rcheck()){
-			var nowtime = date2str(new Date(),"yyyyMMdd");
+//			var nowtime = date2str(new Date(),"yyyyMMdd");
 			$.ajax({
 				type: "POST",
-				url: 'appSysUser/registerSysUser.do',
-		    	data: {USERNAME:$("#USERNAME").val(),PASSWORD:$("#PASSWORD").val(),NAME:$("#name").val(),EMAIL:$("#EMAIL").val(),rcode:$("#rcode").val(),FKEY:$.md5('USERNAME'+nowtime+',fh,'),tm:new Date().getTime()},
+				url: '/register',
+		    	data: {username:$("#USERNAME").val(),password:$("#passwordzc").val(),name:$("#name").val(),email:$("#EMAIL").val(),rcode:$("#rcode").val(),tm:new Date().getTime()},
 				dataType:'json',
 				cache: false,
 				success: function(data){
-					if("00" == data.result){
+					if("S" == data.code){
 						$("#windows2").hide();
 						$("#windows1").show();
 						$("#loginbox").tips({
@@ -480,7 +476,7 @@
 							bg : '#68B500',
 							time : 3
 						});
-					}else if("04" == data.result){
+					}else if("E" == data.code){
 						$("#USERNAME").tips({
 							side : 1,
 							msg : "用户名已存在",
@@ -489,7 +485,7 @@
 						});
 						showfh();
 						$("#USERNAME").focus();
-					}else if("06" == data.result){
+					}else if("codeerror" == data.code){
 						$("#rcode").tips({
 							side : 1,
 							msg : "验证码输入有误",
@@ -503,7 +499,7 @@
 			});
 		}
 	}
-	
+
 	//邮箱格式校验
 	function ismail(mail){
 		return(new RegExp(/^(?:[a-zA-Z0-9]+[_\-\+\.]?)*[a-zA-Z0-9]+@(?:([a-zA-Z0-9]+[_\-]?)*[a-zA-Z0-9]+\.)+([a-zA-Z]{2,})+$/).test(mail));
@@ -520,7 +516,7 @@
 	<script type="text/javascript" src="static/js/jQuery.md5.js"></script>
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 	<script type="text/javascript" src="static/js/jquery.cookie.js"></script>
-	
+
 	<!-- 软键盘控件start -->
 	<script type="text/javascript" src="static/login/keypad/js/form/keypad.js"></script>
 	<script type="text/javascript" src="static/login/keypad/js/framework.js"></script>
