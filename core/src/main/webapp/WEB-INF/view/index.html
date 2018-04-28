@@ -229,11 +229,12 @@
         if(check()){
             var loginname = $("#loginname").val();
             var password = $("#password").val();
-            var code = loginname+","+password+","+$("#code").val();
+//            var code = loginname+","+password+","+$("#code").val();
+            var myVerifyCode = $("#code").val();
             $.ajax({
                 type: "POST",
                 url: domain+'/login',
-                data: {dtocode:code,time:new Date().getTime()},
+                data: {username:loginname,password:password ,myVerifyCode:myVerifyCode,time:new Date().getTime()},
                 dataType:'json',
                 cache: false,
                 success: function(data){
@@ -241,7 +242,16 @@
                     if('S' == data.code){
                         saveCookie();
                         console.log("1");
-//                        window.location.href="<%=basePath%>main/index";
+//                        $.ajax({
+//                                type: "GET",
+//                                url: domain+'/login_success',
+//                                dataType:'json',
+//								async: false,
+//                                success: function(data){
+//                                    console.log("3");
+//								}
+//                                });
+                        window.location.href="login_success";
                     }else if("E" == data.code){
                         $("#loginname").tips({
                             side : 1,

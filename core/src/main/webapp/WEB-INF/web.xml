@@ -19,7 +19,7 @@
 
    <servlet>
    <servlet-name>verifyCodeServlet</servlet-name>
-   <servlet-class>com.hand.xy99.system.VerifyCode.VerifyCodeServlet</servlet-class>
+   <servlet-class>com.jiao.xy99.system.VerifyCode.VerifyCodeServlet</servlet-class>
    </servlet>
    <servlet-mapping>
    <servlet-name>verifyCodeServlet</servlet-name>
@@ -70,11 +70,11 @@
    <!--        <welcome-file>index.html</welcome-file>-->
    <!--</welcome-file-list>-->
    <listener>
-   <listener-class>com.hand.xy99.weixin.weChatServlet.AccessTokenServlet</listener-class>
+   <listener-class>com.jiao.xy99.weixin.weChatServlet.AccessTokenServlet</listener-class>
    </listener>
    <servlet>
    <servlet-name>weChatServlet</servlet-name>
-   <servlet-class>com.hand.xy99.weixin.weChatServlet.weChatAccounts</servlet-class>
+   <servlet-class>com.jiao.xy99.weixin.weChatServlet.weChatAccounts</servlet-class>
    </servlet>
    <servlet-mapping>
    <servlet-name>weChatServlet</servlet-name>
@@ -83,7 +83,7 @@
    
    <servlet>
    <servlet-name>accessTokenServlet</servlet-name>
-   <servlet-class>com.hand.xy99.weixin.weChatServlet.AccessTokenServlet</servlet-class>
+   <servlet-class>com.jiao.xy99.weixin.weChatServlet.AccessTokenServlet</servlet-class>
    </servlet>
    <servlet-mapping>
    <servlet-name>accessTokenServlet</servlet-name>
@@ -92,7 +92,7 @@
 
    <servlet>
    <servlet-name>uploadMediaServlet</servlet-name>
-   <servlet-class>com.hand.xy99.weixin.weChatServlet.UploadMediaServlet</servlet-class>
+   <servlet-class>com.jiao.xy99.weixin.weChatServlet.UploadMediaServlet</servlet-class>
    </servlet>
    <servlet-mapping>
    <servlet-name>uploadMediaServlet</servlet-name>
@@ -101,7 +101,7 @@
 
    <servlet>
    <servlet-name>oauthServlet</servlet-name>
-   <servlet-class>com.hand.xy99.weixin.weChatServlet.OAuthServlet</servlet-class>
+   <servlet-class>com.jiao.xy99.weixin.weChatServlet.OAuthServlet</servlet-class>
    </servlet>
    <servlet-mapping>
    <servlet-name>oauthServlet</servlet-name>

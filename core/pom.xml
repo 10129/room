@@ -3,7 +3,7 @@
   <!--继承父级pom,以及父级相关依赖-->
   <parent>
     <artifactId>xy99520</artifactId>
-    <groupId>com.hand</groupId>
+    <groupId>com.jiao</groupId>
     <version>${project.build.version}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -85,6 +85,11 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>${freemarker.version}</version>
     </dependency>
     <!-- springframe end -->
     <!--mysql数据库驱动 -->
@@ -241,7 +246,7 @@
             <version>1.2.1</version>
           </dependency>
           <dependency>
-            <groupId>com.hand</groupId>
+            <groupId>com.jiao</groupId>
             <artifactId>core-db</artifactId>
             <type>jar</type>
             <version>${project.build.version}</version>
@@ -273,7 +278,7 @@
             <id>update</id>
             <phase>process-resources</phase>
             <configuration>
-              <changeLogFile>com/hand/xy99/db/liquibase.groovy</changeLogFile>
+              <changeLogFile>com/jiao/xy99/db/liquibase.groovy</changeLogFile>
               <driver>${db.driver}</driver>
               <url>${db.url}</url>
               <username>${db.user}</username>

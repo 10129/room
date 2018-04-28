@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+    <mapper namespace="com.jiao.xy99.user.mapper.UserMapper">
+        <resultMap id="BaseResultMap" type="com.jiao.xy99.user.dto.User" >
+            <id column="USER_ID" property="userId" jdbcType="DECIMAL" />
+            <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+            <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+            <result column="LOGIN_NUM" property="loginNum" jdbcType="DECIMAL" />
+            <result column="LAST_IP" property="lastIp" jdbcType="VARCHAR" />
+            <result column="LAST_LOGIN_DATE" property="lastLoginDate" jdbcType="TIMESTAMP" />
+        </resultMap>
+
+        <select id="getMatchCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+            SELECT count(*) FROM sys_user WHERE user_name =#{name,jdbcType=DECIMAL}
+            and password = #{password,jdbcType=DECIMAL}
+        </select>
+        <select id="findUserByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+            select user_id,user_name,login_num from sys_user where user_name = #{name,jdbcType=DECIMAL}
+        </select>
+        <update id="updateLoginInfo" parameterType="com.jiao.xy99.user.dto.User">
+            update sys_user set last_login_date = #{lastLoginDate,jdbcType=DECIMAL},
+            last_ip = #{lastIp,jdbcType=DECIMAL},
+            login_num = #{loginNum,jdbcType=DECIMAL}
+            where user_id = #{userId,jdbcType=DECIMAL}
+        </update>
+
+        <resultMap id="LoginResultMap" type="com.jiao.xy99.user.dto.UserLoginLog" >
+            <id column="LOGIN_LOG_ID" property="loginLogId" jdbcType="DECIMAL" />
+            <result column="USER_ID" property="userId" jdbcType="DECIMAL" />
+            <result column="IP" property="ip" jdbcType="VARCHAR" />
+            <result column="LOGIN_TIME" property="loginTime" jdbcType="TIMESTAMP" />
+        </resultMap>
+        <insert id="insertLoginLog" parameterType="com.jiao.xy99.user.dto.UserLoginLog">
+        insert into sys_user_login_log(user_id, ip,login_time) values(
+        #{userId,jdbcType=DECIMAL},
+        #{ip,jdbcType=VARCHAR},
+        #{loginTime,jdbcType=TIMESTAMP})
+    </insert>
+    </mapper>
