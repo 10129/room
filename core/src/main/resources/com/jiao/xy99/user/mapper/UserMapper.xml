@@ -36,4 +36,45 @@
         #{ip,jdbcType=VARCHAR},
         #{loginTime,jdbcType=TIMESTAMP})
     </insert>
+
+    <select id="getFuntionMap" resultType="java.lang.String">
+SELECT
+
+	srb.URL
+FROM
+	sys_function_b sfb,
+	sys_resource_b srb
+WHERE
+	sfb.RESOURCE_ID = srb.RESOURCE_ID
+    </select>
+
+    <resultMap id="ResourceResultMap" type="com.jiao.xy99.user.dto.Resource" >
+        <id column="RESOURCE_ID" property="resourceId" jdbcType="DECIMAL"/>
+        <result column="URL" property="url" jdbcType="VARCHAR"/>
+        <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
+        <result column="LOGIN_REQUIRE" property="loginRequire" jdbcType="VARCHAR"/>
+        <result column="ACCESS_CHECK" property="accessCheck" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectByPrimaryKey" resultMap="ResourceResultMap" parameterType="java.lang.Long">
+        SELECT * from sys_resource_b WHERE RESOURCE_ID =#{resourceId,jdbcType=DECIMAL}
+    </select>
+
+    <resultMap id="FunctionResultMap" type="com.jiao.xy99.user.dto.Function">
+        <id column="FUNCTION_ID" property="functionId" jdbcType="DECIMAL"/>
+        <result column="MODULE_CODE" property="moduleCode" jdbcType="VARCHAR"/>
+        <result column="FUNCTION_ICON" property="functionIcon" jdbcType="VARCHAR"/>
+        <result column="FUNCTION_CODE" property="functionCode" jdbcType="VARCHAR"/>
+        <result column="FUNCTION_NAME" property="functionName" jdbcType="VARCHAR"/>
+        <result column="FUNCTION_DESCRIPTION" property="functionDescription" jdbcType="VARCHAR"/>
+        <result column="LANG" property="lang" jdbcType="VARCHAR"/>
+        <result column="RESOURCE_ID" property="resourceId" jdbcType="DECIMAL"/>
+        <result column="PARENT_FUNCTION_ID" property="parentFunctionId" jdbcType="DECIMAL"/>
+        <result column="TYPE" property="type" jdbcType="VARCHAR"/>
+        <result column="FUNCTION_SEQUENCE" property="functionSequence" jdbcType="DECIMAL"/>
+    </resultMap>
+    <select id="selectFunctionAll" resultMap="FunctionResultMap">
+        SELECT * from sys_function_b
+    </select>
     </mapper>

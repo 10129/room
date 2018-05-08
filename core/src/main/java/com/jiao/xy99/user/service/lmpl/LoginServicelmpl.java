@@ -1,16 +1,20 @@
 package com.jiao.xy99.user.service.lmpl;
 import com.jiao.xy99.system.util.ResponseData;
 import com.jiao.xy99.user.controllers.LoginController;
-import com.jiao.xy99.user.dto.User;
-import com.jiao.xy99.user.dto.UserLoginLog;
+import com.jiao.xy99.user.dto.*;
 import com.jiao.xy99.user.mapper.UserMapper;
 import com.jiao.xy99.user.service.ILoginService;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by xieshuai on 2018/4/8.
@@ -121,4 +125,105 @@ public class LoginServicelmpl implements ILoginService {
         return responseData;
     }
 
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<MenuItem> selectRoleFunctions(HttpServletRequest request) {
+        List<Function> functions = userMapper.selectFunctionAll();
+        Set<Long> allRoleFunctionIds = new HashSet<>();
+//        Long[] roleIds = request.getAllRoleId();
+        //取出登录用户下所有角色的功能ID集合 去重角色拥有的相同功能
+//        for (Long roleId : roleIds) {
+//            Long[] roleFunctionIds = roleFunctionService.getRoleFunctionById(roleId);
+        Long[] roleFunctionIds = {10175L,10176L,10177L};
+            if (ArrayUtils.isNotEmpty(roleFunctionIds)) {
+                allRoleFunctionIds.addAll(Arrays.asList(roleFunctionIds));
+            }
+//        }
+        Map<Long, Function> functionMap = new HashMap<>(16);
+        if (CollectionUtils.isNotEmpty(functions)) {
+            for (Function f : functions) {
+                functionMap.put(f.getFunctionId(), f);
+            }
+        }
+        Map<Long, MenuItem> menuMap = new HashMap<>(16);
+        if (CollectionUtils.isNotEmpty(allRoleFunctionIds)) {
+            for (Long functionId : allRoleFunctionIds) {
+                createMenuRecursive(menuMap, functionMap, functionId);
+            }
+        }
+        List<MenuItem> itemList = new ArrayList<>();
+        menuMap.forEach((k, v) -> {
+            if (v.getParent() == null) {
+                itemList.add(v);
+            }
+            if (v.getChildren() != null) {
+                Collections.sort(v.getChildren());
+            }
+        });
+        Collections.sort(itemList);
+        return itemList;
+    }
+
+    /**
+     * 递归创建当前登录用户的功能菜单.
+     *
+     * @param menuMap     功能菜单Map
+     * @param functionMap 所有功能Map
+     * @param functionId  当前登录用户拥有的功能Id
+     * @return 功能菜单
+     */
+    private MenuItem createMenuRecursive(Map<Long, MenuItem> menuMap, Map<Long, Function> functionMap, Long functionId) {
+        MenuItem menuItem = menuMap.get(functionId);
+        if (menuItem == null) {
+            Function function = functionMap.get(functionId);
+            if (function == null) {
+                // role has a function that dose not exists.
+                return null;
+            }
+            menuItem = createMenuItem(function);
+            menuMap.put(functionId, menuItem);
+            // create parent menuItem
+            Long parentId = function.getParentFunctionId();
+            if (parentId != null) {
+                MenuItem parentMenuItem = createMenuRecursive(menuMap, functionMap, parentId);
+                if (parentMenuItem != null) {
+                    List<MenuItem> children = parentMenuItem.getChildren();
+                    if (children == null) {
+                        children = new ArrayList<>();
+                        parentMenuItem.setChildren(children);
+                    }
+                    menuItem.setParent(parentMenuItem);
+                    children.add(menuItem);
+                }
+            }
+        }
+        return menuItem;
+    }
+    /**
+     * 创建功能菜单.
+     *
+     * @param function 功能
+     * @return 功能菜单叶子节点
+     */
+    private MenuItem createMenuItem(Function function) {
+        MenuItem menu = new MenuItem();
+        menu.setText(function.getFunctionName());
+        menu.setIcon(function.getFunctionIcon());
+        menu.setFunctionCode(function.getFunctionCode());
+        if (function.getResourceId() != null) {
+            Resource resource = selectResourceById(function.getResourceId());
+            if (resource != null) {
+                menu.setUrl(resource.getUrl());
+            }
+        }
+        menu.setId(function.getFunctionId());
+        menu.setScore(function.getFunctionSequence());
+        return menu;
+    }
+
+    @Override
+    public Resource selectResourceById(Long id) {
+            Resource resource = userMapper.selectByPrimaryKey(id);
+        return resource;
+    }
 }
