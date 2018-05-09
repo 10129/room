@@ -20,7 +20,7 @@
     <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
     <mvc:resources mapping="/lib/**" location="/lib/" />
     <mvc:resources mapping="/resources/**" location="/resources/" />
-    <mvc:resources mapping="/view/**" location="/WEB-INF/view/" />
+    <mvc:resources mapping="/**" location="/WEB-INF/view/" />
 
      <!--视图model映射 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
