@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="lib/assets/css/color_skins.css">
 
     <link rel="stylesheet" href="lib/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="./build/css/app.css" media="all">
+    <link rel="stylesheet" href="lib/build/css/app.css" media="all">
 </head>
 <body class="theme-purple">
 <!-- Page Loader -->
@@ -816,7 +816,7 @@
 <script>
     var message;
     layui.config({
-        base: 'build/js/'
+        base: 'lib/build/js/'
     }).use(['app', 'message'], function() {
         var app = layui.app,
             $ = layui.jquery,
@@ -831,7 +831,7 @@
             layer.open({
                 title: false,
                 type: 1,
-                content: '<img src="/build/images/pay.png" />',
+                content: '<img src="lib/build/images/pay.png" />',
                 area: ['500px', '250px'],
                 shadeClose: true
             });
