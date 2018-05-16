@@ -56,8 +56,6 @@
         <property name="basePackage" value="*.**.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
-
-
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
             <list>
@@ -71,5 +69,5 @@
             </list>
         </property>
     </bean>
-
+    <!-- springframework mvc END-->
 </beans>

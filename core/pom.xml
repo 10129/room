@@ -92,6 +92,29 @@
       <version>${freemarker.version}</version>
     </dependency>
     <!-- springframe end -->
+    <!--redis-->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>${jedis.version}</version>
+    </dependency>
+    <!-- spring-data-redis依赖 -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>${spring.redis.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!--redis end-->
     <!--mysql数据库驱动 -->
     <dependency>
       <groupId>mysql</groupId>
@@ -167,6 +190,11 @@
       <groupId>jstl</groupId>
       <artifactId>jstl</artifactId>
       <version>1.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
     </dependency>
 
   </dependencies>

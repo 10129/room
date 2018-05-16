@@ -11,6 +11,7 @@ import com.jiao.xy99.user.service.ILoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,8 @@ public class LoginController {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private ILoginService loginService;
-
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 显示主界面.
@@ -66,6 +68,12 @@ public class LoginController {
     @ResponseBody
     public ModelAndView loginSuccess(HttpServletRequest request) {
         Boolean isVaildUser=loginService.validateSessionLogin(request);
+        //redis 缓存
+        redisTemplate.opsForHash().put("user", "username", "admin");
+        redisTemplate.opsForHash().put("user", "password", "admin1");
+        Object object = redisTemplate.opsForHash().get("user", "username");
+        Object object2 = redisTemplate.opsForHash().get("user", "password");
+        System.out.println(object);
         String view="index";
         if(isVaildUser){
             view="desk_index";
