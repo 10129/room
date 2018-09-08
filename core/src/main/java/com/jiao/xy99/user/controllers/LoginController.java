@@ -35,9 +35,11 @@ public class LoginController {
      * @param request
      *  HttpServletRequest
      */
-    @RequestMapping(value = { "/" }, method = RequestMethod.GET)
+//    @RequestMapping(value = { "/" }, method = RequestMethod.GET)
+//    @GetMapping(value = {"/", "/index.html"})
+    @RequestMapping(value = {"/login.html", "/login"})
     public ModelAndView indexView(HttpServletRequest request) {
-        return new ModelAndView("index");
+        return new ModelAndView("login");
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -74,9 +76,9 @@ public class LoginController {
         Object object = redisTemplate.opsForHash().get("user", "username");
         Object object2 = redisTemplate.opsForHash().get("user", "password");
         System.out.println(object);
-        String view="index";
+        String view="login";
         if(isVaildUser){
-            view="desk_index";
+            view="index";
         }
         return new ModelAndView(view);
     }
