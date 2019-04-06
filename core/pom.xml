@@ -40,6 +40,12 @@
       <artifactId>mybatis-spring</artifactId>
       <version>${mybatis.spring.version}</version>
     </dependency>
+    <!-- jxls-core -->
+    <dependency>
+      <groupId>net.sf.jxls</groupId>
+      <artifactId>jxls-core</artifactId>
+      <version>1.0.6</version>
+    </dependency>
     <!-- springframe start -->
     <dependency>
       <groupId>org.springframework</groupId>

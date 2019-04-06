@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -30,9 +32,11 @@ public class LoginServicelmpl implements ILoginService {
 
     /**
      * 登录成功后 更新登录信息
+     * 加方法的事务回滚
      * @param user
      * @param loginLog
      */
+    @Transactional(rollbackFor = Exception.class)
     public void loginSuccess(User user,UserLoginLog loginLog) {
         userMapper.updateLoginInfo(user);
         userMapper.insertLoginLog(loginLog);
