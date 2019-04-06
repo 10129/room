@@ -7,6 +7,8 @@ package com.jiao.xy99.user.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import com.jiao.xy99.system.util.ResponseData;
+import com.jiao.xy99.user.dto.User;
+import com.jiao.xy99.user.dto.User1;
 import com.jiao.xy99.user.service.ILoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 
 @Controller
@@ -71,5 +75,27 @@ public class LoginController {
             view="desk_index";
         }
         return new ModelAndView(view);
+    }
+
+    /**
+     * react 用户登录测试
+     * @param user
+     * @return
+     */
+    @PostMapping("/test/login2" )
+    @ResponseBody
+    public String Login2(User1 user) {
+        String username = user.getUsername();
+        String pwd = user.getPassword();
+        System.out.println("qqq"+username);
+        return username + "," + pwd;
+    }
+    @PostMapping("/test/login1" )
+    @ResponseBody
+    public User1 Login1(User1 user) {
+        String username = user.getUsername();
+        String pwd = user.getPassword();
+        System.out.println("qqq1"+username);
+        return user;
     }
 }
